@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = '202eagle'  # Set your secret key
 
 # Read the Excel sheet into a pandas dataframe
-df = pd.read_excel('master/data/filename.xlsx', header=1)
+df = pd.read_excel('data/filename.xlsx', header=1)
 
 # Convert the date columns to datetime format
 df['ETA'] = pd.to_datetime(df['ETA'])
@@ -55,16 +55,6 @@ def update_chart(customer_name):
     files_html = pio.to_html(fig_files, full_html=False)
     teu_html = pio.to_html(fig_teu, full_html=False)
     return files_html, teu_html
-  
-    # Render the template with context data
-    rendered_html = render_template('chart.html', fig_files_html=files_html, fig_teu_html=teu_html)
-
-    # Save the rendered HTML to a file (static/chart.html)
-    with open('static/chart.html', 'w') as file:
-        file.write(rendered_html)
-
-    return 'static/chart.html'  # Return the path to the static HTML file
-
 
 class CustomerForm(FlaskForm):
     customer = SelectField('Select Customer', choices=[], coerce=str)
@@ -75,14 +65,14 @@ def index():
 
     # Populate the choices for the dropdown from customer_data
     form.customer.choices = [(customer, customer) for customer in customer_data.keys()]
+    
 
     if form.validate_on_submit():
         customer_name = form.customer.data
-        chart_path = update_chart(customer_name)
-        return render_template('index.html', form=form, chart_path=chart_path)
+        files_html, teu_html = update_chart(customer_name)
+        return render_template('index.html', form=form, files_html=files_html, teu_html=teu_html)
     else:
         return render_template('index.html', form=form)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
