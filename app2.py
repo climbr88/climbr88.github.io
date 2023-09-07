@@ -60,7 +60,7 @@ class CustomerForm(FlaskForm):
     customer = SelectField('Select Customer', choices=[], coerce=str)
 
 @app.route('/', methods=['GET', 'POST'])
-def index2():
+def index():
     form = CustomerForm()
 
     # Populate the choices for the dropdown from customer_data
