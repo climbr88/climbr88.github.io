@@ -75,14 +75,14 @@ def index():
 
     # Populate the choices for the dropdown from customer_data
     form.customer.choices = [(customer, customer) for customer in customer_data.keys()]
-    
 
     if form.validate_on_submit():
         customer_name = form.customer.data
-        files_html, teu_html = update_chart(customer_name)
-        return render_template('index.html', form=form, files_html=files_html, teu_html=teu_html)
+        chart_path = update_chart(customer_name)
+        return render_template('index.html', form=form, chart_path=chart_path)
     else:
         return render_template('index.html', form=form)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
