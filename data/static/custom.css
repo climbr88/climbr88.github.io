@@ -1,0 +1,13 @@
+/* Custom CSS for form and button placement */
+.container {
+    margin-top: 20px;
+}
+
+.form-inline .form-group {
+    margin-right: 10px;
+}
+
+/* Adjust the margin and padding as needed */
+.btn-primary {
+    margin-top: 0;
+}

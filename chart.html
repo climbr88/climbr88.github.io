@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Chart</title>
+</head>
+<body>
+    <h1>Chart for {{ request.form['customer_name'] }}</h1>
+    <div>
+        {{ fig_files_html | safe }}
+    </div>
+    <div>
+        {{ fig_teu_html | safe }}
+    </div>
+</body>
+</html>
