@@ -29,7 +29,7 @@ blinker==1.6.2
 click==8.1.7
 colorama==0.4.6
 et-xmlfile==1.1.0
-Flask==2.3.3
+
 Flask-WTF==1.1.1
 gunicorn==21.2.0
 importlib-metadata==6.8.0
