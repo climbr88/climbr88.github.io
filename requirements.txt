@@ -22,7 +22,7 @@ six==1.16.0
 statsmodels== 0.13.5
 tenacity==8.2.3
 tzdata==2023.3
-Werkzeug==2.3.7
+Werkzeug==2.2.3
 WTForms==3.0.1
 zipp==3.16.2
 blinker==1.6.2
