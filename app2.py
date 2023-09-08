@@ -59,7 +59,7 @@ def update_chart(customer_name):
 class CustomerForm(FlaskForm):
     customer = SelectField('Select Customer', choices=[], coerce=str)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/docs/', methods=['GET', 'POST'])
 def index():
     form = CustomerForm()
 
@@ -70,9 +70,9 @@ def index():
     if form.validate_on_submit():
         customer_name = form.customer.data
         files_html, teu_html = update_chart(customer_name)
-        return render_template('index.html', form=form, files_html=files_html, teu_html=teu_html)
+        return render_template('docs/index.html', form=form, files_html=files_html, teu_html=teu_html)
     else:
-        return render_template('index.html', form=form)
+        return render_template('docs/index.html', form=form)
 
 if __name__ == '__main__':
     app.run(debug=True)
