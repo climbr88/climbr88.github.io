@@ -19,7 +19,7 @@ python-dateutil==2.8.2
 pytz==2023.3.post1
 scipy==1.7.3
 six==1.16.0
-statsmodels==0.14.0
+statsmodels== 0.13.5
 tenacity==8.2.3
 tzdata==2023.3
 Werkzeug==2.3.7
