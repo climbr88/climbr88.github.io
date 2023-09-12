@@ -59,7 +59,7 @@ def update_chart(customer_name):
 class CustomerForm(FlaskForm):
     customer = SelectField('Select Customer', choices=[], coerce=str)
 
-@app.route('/docs/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
     form = CustomerForm()
 
