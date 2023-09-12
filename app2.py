@@ -71,9 +71,9 @@ def index():
     if form.validate_on_submit():
         customer_name = form.customer.data
         files_html, teu_html = update_chart(customer_name)
-        return render_template('docs/index.html', form=form, files_html=files_html, teu_html=teu_html)
+        return render_template('templates/index.html', form=form, files_html=files_html, teu_html=teu_html)
     else:
-        return render_template('docs/index.html', form=form)
+        return render_template('templates/index.html', form=form)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
