@@ -10,7 +10,7 @@ app.secret_key = '202eagle'  # Set your secret key
   
 
 # Read the Excel sheet into a pandas dataframegi
-df = pd.read_excel('docs/filename.xlsx', header=1)
+df = pd.read_excel('static/filename.xlsx', header=1)
 
 # Convert the date columns to datetime format
 df['ETA'] = pd.to_datetime(df['ETA'])
