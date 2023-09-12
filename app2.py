@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = '202eagle'  # Set your secret key
   
 
-# Read the Excel sheet into a pandas dataframe
+# Read the Excel sheet into a pandas dataframegi
 df = pd.read_excel('docs/filename.xlsx', header=1)
 
 # Convert the date columns to datetime format
@@ -60,7 +60,7 @@ def update_chart(customer_name):
 class CustomerForm(FlaskForm):
     customer = SelectField('Select Customer', choices=[], coerce=str)
 
-@app.route('/doc/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
     form = CustomerForm()
 
