@@ -46,6 +46,7 @@
 </head>
 <body>
     <div class="header">
+        <img src="{{ url_for('static', filename='iff_logo.jpg') }}" alt="IFF Logo" style="width: 100px; height: auto;">
         <h1>Customer Data Visualization</h1>
     </div>
     <div class="container">
@@ -59,8 +60,8 @@
                         {{ form.customer(class="form-control") }}
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <button type="submit" class="btn btn-primary mt-2 btn-submit">Submit</button>
+               <div class="col-sm-4">
+                    <button type="submit" class="btn btn-primary mt-4">Submit</button>
                 </div>
             </div>
         </form>
