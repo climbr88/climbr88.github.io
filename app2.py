@@ -39,13 +39,17 @@ for customer in files_by_customer['CUSTOMER'].unique():
 def update_chart(customer_name):
     files_data = customer_data[customer_name]['Files']
     teu_data = customer_data[customer_name]['TEU']
-    files_customdata = [f'{year}' for year in files_data['Year']]
-    teu_customdata = [f'{year}' for year in teu_data['Year']]
+
+    # Extract the correct year from the data
+    files_customdata = [str(year) for year in files_data['Year']]
+    teu_customdata = [str(year) for year in teu_data['Year']]
+
     fig_files = px.line(files_data, x='Month', y='Files', color='Year', title=f'{customer_name} Files by Month')
     fig_files.update_traces(mode='lines+markers', hovertemplate='Month: %{x}<br>Files: %{y}<br>Year: %{customdata}<extra></extra>', customdata=files_customdata)
     fig_files.update_layout(yaxis_title='Number of Files', hovermode='closest', xaxis=dict(showticklabels=True))
     fig_files.update_xaxes(tickvals=list(range(1, 13)), ticktext=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
     fig_files.update_yaxes(showticklabels=False, tickmode='linear', dtick=1)
+    
     fig_teu = px.line(teu_data, x='Month', y='TEU', color='Year', title=f'{customer_name} TEU by Month')
     fig_teu.update_traces(mode='lines+markers', hovertemplate='Month: %{x}<br>TEU: %{y}<br>Year: %{customdata}<extra></extra>', customdata=teu_customdata)
     fig_teu.update_layout(yaxis_title='Number of TEU', hovermode='closest', xaxis=dict(showticklabels=True))
