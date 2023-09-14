@@ -40,18 +40,14 @@ def update_chart(customer_name):
     files_data = customer_data[customer_name]['Files']
     teu_data = customer_data[customer_name]['TEU']
     
-    # Convert the Year column to strings and then to a list
-    files_customdata = files_data['Year'].astype(str).tolist()
-    teu_customdata = teu_data['Year'].astype(str).tolist()
-
     fig_files = px.line(files_data, x='Month', y='Files', color='Year', title=f'{customer_name} Files by Month')
-    fig_files.update_traces(mode='lines+markers', hovertemplate='Month: %{x}<br>Files: %{y}<br>Year: %{customdata}<extra></extra>', customdata=files_customdata)
+    fig_files.update_traces(mode='lines+markers', hovertemplate='Month: %{x}<br>Files: %{y}<extra></extra>')
     fig_files.update_layout(yaxis_title='Number of Files', hovermode='closest', xaxis=dict(showticklabels=True))
     fig_files.update_xaxes(tickvals=list(range(1, 13)), ticktext=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
     fig_files.update_yaxes(showticklabels=False, tickmode='linear', dtick=1)
     
     fig_teu = px.line(teu_data, x='Month', y='TEU', color='Year', title=f'{customer_name} TEU by Month')
-    fig_teu.update_traces(mode='lines+markers', hovertemplate='Month: %{x}<br>TEU: %{y}<br>Year: %{customdata}<extra></extra>', customdata=teu_customdata)
+    fig_teu.update_traces(mode='lines+markers', hovertemplate='Month: %{x}<br>TEU: %{y}<extra></extra>')
     fig_teu.update_layout(yaxis_title='Number of TEU', hovermode='closest', xaxis=dict(showticklabels=True))
     fig_teu.update_xaxes(tickvals=list(range(1, 13)), ticktext=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
     fig_teu.update_yaxes(showticklabels=False, tickmode='linear', dtick=1)
@@ -59,6 +55,7 @@ def update_chart(customer_name):
     # Export the chart as an HTML file
     files_html = pio.to_html(fig_files, full_html=False)
     teu_html = pio.to_html(fig_teu, full_html=False)
+    
     return files_html, teu_html
 
 
