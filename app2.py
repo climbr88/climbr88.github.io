@@ -39,10 +39,10 @@ for customer in files_by_customer['CUSTOMER'].unique():
 def update_chart(customer_name):
     files_data = customer_data[customer_name]['Files']
     teu_data = customer_data[customer_name]['TEU']
-
-    # Extract the correct year from the data
-    files_customdata = [str(year) for year in files_data['Year']]
-    teu_customdata = [str(year) for year in teu_data['Year']]
+    
+    # Convert the Year column to strings and then to a list
+    files_customdata = files_data['Year'].astype(str).tolist()
+    teu_customdata = teu_data['Year'].astype(str).tolist()
 
     fig_files = px.line(files_data, x='Month', y='Files', color='Year', title=f'{customer_name} Files by Month')
     fig_files.update_traces(mode='lines+markers', hovertemplate='Month: %{x}<br>Files: %{y}<br>Year: %{customdata}<extra></extra>', customdata=files_customdata)
@@ -60,6 +60,7 @@ def update_chart(customer_name):
     files_html = pio.to_html(fig_files, full_html=False)
     teu_html = pio.to_html(fig_teu, full_html=False)
     return files_html, teu_html
+
 
 class CustomerForm(FlaskForm):
     customer = SelectField('Select Customer', choices=[], coerce=str)
