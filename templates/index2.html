@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Data</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Customer Data</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Total Files (Jan-Aug 2022)</th>
+                <th>Total Files (Jan-Aug 2023)</th>
+                <th>Total TEU (Jan-Aug 2022)</th>
+                <th>Total TEU (Jan-Aug 2023)</th>
+                <th>Percent Decrease (Files)</th>
+                <th>Percent Decrease (TEU)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer, percent_decrease_files, percent_decrease_teu, total_files_2022, total_files_2023, total_teu_2022, total_teu_2023 in decrease_customers %}
+                <tr>
+                    <td>{{ customer }}</td>
+                    <td>{{ total_files_2022 }}</td>
+                    <td>{{ total_files_2023 }}</td>
+                    <td>{{ total_teu_2022 }}</td>
+                    <td>{{ total_teu_2023 }}</td>
+                    <td>{{ "%.2f"|format(percent_decrease_files) }}%</td>
+                    <td>{{ "%.2f"|format(percent_decrease_teu) }}%</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
