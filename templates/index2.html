@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Data</title>
+    <title>Customer Decrease Chart</title>
     <style>
+        /* Add your CSS styles here for better styling */
         table {
             border-collapse: collapse;
             width: 100%;
@@ -16,44 +17,76 @@
             padding: 8px;
         }
 
-        tr:nth-child(even) {
+        th {
             background-color: #f2f2f2;
         }
 
-        th {
-            background-color: #4CAF50;
-            color: white;
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
         }
     </style>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
 </head>
 <body>
-    <h1>Customer Data</h1>
-
-    <table>
+    <h1>Customer Decrease Chart</h1>
+    <table id="customerTable" class="display">
         <thead>
             <tr>
-                <th>Customer Name</th>
-                <th>Total Files (Jan-Aug 2022)</th>
-                <th>Total Files (Jan-Aug 2023)</th>
-                <th>Total TEU (Jan-Aug 2022)</th>
-                <th>Total TEU (Jan-Aug 2023)</th>
+                <th>Customer</th>
+                <th>Total Files (2022)</th>
+                <th>Total Files (2023)</th>
                 <th>Percent Decrease (Files)</th>
+                <th>Total TEU (2022)</th>
+                <th>Total TEU (2023)</th>                
                 <th>Percent Decrease (TEU)</th>
+                <th>Total Files (Q1 2023)</th>
+                <th>Total Files (Q2 2023)</th>
+                <th>Decrease in Files (Q2 to Q1)</th>
+                <th>Total TEU (Q1 2023)</th>
+                <th>Total TEU (Q2 2023)</th>
+                <th>Decrease in TEU (Q2 to Q1)</th>
             </tr>
         </thead>
         <tbody>
-            {% for customer, percent_decrease_files, percent_decrease_teu, total_files_2022, total_files_2023, total_teu_2022, total_teu_2023 in decrease_customers %}
-                <tr>
-                    <td>{{ customer }}</td>
-                    <td>{{ total_files_2022 }}</td>
-                    <td>{{ total_files_2023 }}</td>
-                    <td>{{ total_teu_2022 }}</td>
-                    <td>{{ total_teu_2023 }}</td>
-                    <td>{{ "%.2f"|format(percent_decrease_files) }}%</td>
-                    <td>{{ "%.2f"|format(percent_decrease_teu) }}%</td>
-                </tr>
+            
+            {% for customer, total_files_2022, total_files_2023, percent_decrease_files, total_teu_2022, total_teu_2023, percent_decrease_teu, files_q1_2023, files_q2_2023, decrease_files_q2_to_q1, teu_q1_2023, teu_q2_2023, decrease_teu_q2_to_q1 in decrease_customers %}
+            <tr>
+                <td>{{ customer }}</td>
+                <td>{{ total_files_2022 }}</td>
+                <td>{{ total_files_2023 }}</td>
+                <td>{{ "%0.2f%%"|format(percent_decrease_files) if percent_decrease_files is not none else "0.00%" }}</td>
+                <td>{{ total_teu_2022 }}</td>
+                <td>{{ total_teu_2023 }}</td>
+                <td>{{ "%0.2f%%"|format(percent_decrease_teu) if percent_decrease_teu is not none else "0.00%" }}</td>
+                <td>{{ files_q1_2023 }}</td>
+                <td>{{ files_q2_2023 }}</td>
+                <td>{{ "%0.2f%%"|format(decrease_files_q2_to_q1) if decrease_files_q2_to_q1 is not none else "0.00%" }}</td>
+                <td>{{ teu_q1_2023 }}</td>
+                <td>{{ teu_q2_2023 }}</td>
+                <td>{{ "%0.2f%%"|format(decrease_teu_q2_to_q1) if decrease_teu_q2_to_q1 is not none else "0.00%" }}</td>                   
+            </tr>    
+                            
+                                
+            
             {% endfor %}
         </tbody>
     </table>
+    <script>
+        $(document).ready(function() {
+            console.log("Document ready.");
+            var table = $('#customerTable').DataTable({
+                "paging": false,
+                "searching": true,
+                "info": true,
+                "order": []
+        });
+        console.log("DataTable initialized.");
+        var data = table.rows().data().toArray();
+
+});
+        
+    </script>
 </body>
 </html>
