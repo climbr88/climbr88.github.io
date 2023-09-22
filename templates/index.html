@@ -6,31 +6,51 @@
     <title>Flask App Table</title>
     <style>
         /* Add your CSS styling for the table here */
+        body {
+            text-align: center;
+        }
+
+        .logo {
+            width: 100px; /* Adjust the width as needed */
+            height: auto;
+            margin-top: 20px;
+        }
+
+        h1 {
+            background-color: #336699; /* Background color for the first heading */
+            color: white; /* Text color for the first heading */
+            padding: 10px; /* Add padding for spacing */
+            font-size: 24px; /* Adjust font size as needed */
+        }
+
         table {
             border-collapse: collapse;
             width: 80%;
             margin: 20px auto;
         }
+
         th, td {
             border: 1px solid #dddddd;
             text-align: left;
             padding: 8px;
         }
+
         th {
             background-color: #f2f2f2;
         }
-        h1 {
-            text-align: center;
-        }
+
         .even {
             background-color: #f2f2f2;
         }
+
         .odd {
             background-color: #ffffff;
         }
+
         .negative {
             color: red;
         }
+
         .less-than-100 {
             background-color: yellow;
         }
@@ -39,10 +59,12 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
-
 </head>
 <body>
-    <h1>**Customer P&L Report**</h1>
+    <img src="{{ url_for('static', filename='iff_logo.jpg') }}" alt="Your Logo" class="logo">
+
+
+    <h1>Customer P&L Report</h1>
 
     <h2>Customer Data</h2>
     <table id="customerTable" class="display">
@@ -74,17 +96,12 @@
                 "searching": true,
                 "info": true,
                 "order": []
+            });
+            console.log("DataTable initialized.");
+            var data = table.rows().data().toArray();
         });
-        console.log("DataTable initialized.");
-        var data = table.rows().data().toArray();
-
-});
-        
     </script>
     
     <!-- ... Rest of your HTML code ... -->
-</body>
-</html>
-
 </body>
 </html>
