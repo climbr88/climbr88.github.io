@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import pandas as pd
+import os
 
 app = Flask(__name__)
 app.secret_key = '202eagle'  # Set your secret key
@@ -30,27 +31,43 @@ for customer in files_by_customer['CUSTOMER'].unique():
     teu_data = teu_by_customer[teu_by_customer['CUSTOMER'] == customer]
     customer_data[customer] = {'Files': files_data, 'TEU': teu_data}
 
-# Calculate total files and TEU for Jan-Aug 2022 and 2023
-total_files_2022 = files_by_customer[(files_by_customer['Year'] == 2022) & (files_by_customer['Month'] <= 8)].groupby('CUSTOMER')['Files'].sum()
-total_files_2023 = files_by_customer[(files_by_customer['Year'] == 2023) & (files_by_customer['Month'] <= 8)].groupby('CUSTOMER')['Files'].sum()
-
-total_teu_2022 = teu_by_customer[(teu_by_customer['Year'] == 2022) & (teu_by_customer['Month'] <= 8)].groupby('CUSTOMER')['TEU'].sum()
-total_teu_2023 = teu_by_customer[(teu_by_customer['Year'] == 2023) & (teu_by_customer['Month'] <= 8)].groupby('CUSTOMER')['TEU'].sum()
-
-# Calculate percent decrease
+# Identify customers with a decrease of 20% or more in shipments in 2023 compared to 2022
 decrease_customers = []
-for customer in total_files_2022.index:
-    percent_decrease_files = ((total_files_2022[customer] - total_files_2023.get(customer, 0)) / total_files_2022[customer]) * 100
-    percent_decrease_teu = ((total_teu_2022[customer] - total_teu_2023.get(customer, 0)) / total_teu_2022[customer]) * 100
-    if percent_decrease_files >= 20 or percent_decrease_teu >= 20:
-        decrease_customers.append((customer, percent_decrease_files, percent_decrease_teu, total_files_2022[customer], total_files_2023.get(customer, 0), total_teu_2022[customer], total_teu_2023.get(customer, 0)))
+for customer in files_by_customer['CUSTOMER'].unique():
+    files_2022 = files_by_customer[(files_by_customer['CUSTOMER'] == customer) & (files_by_customer['Year'] == 2022)]['Files'].sum()
+    files_q1_2023 = files_by_customer[(files_by_customer['CUSTOMER'] == customer) & (files_by_customer['Year'] == 2023) & (files_by_customer['Month'] <= 3)]['Files'].sum()
+    files_q2_2023 = files_by_customer[(files_by_customer['CUSTOMER'] == customer) & (files_by_customer['Year'] == 2023) & (files_by_customer['Month'] <= 6)]['Files'].sum()
+    total_files_2022 = files_by_customer[(files_by_customer['CUSTOMER'] == customer) & (files_by_customer['Year'] == 2022)]['Files'].sum()
+    total_files_2023 = files_by_customer[(files_by_customer['CUSTOMER'] == customer) & (files_by_customer['Year'] == 2023)]['Files'].sum()
+    teu_2022 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2022)]['TEU'].sum()
+    teu_q1_2023 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2023) & (teu_by_customer['Month'] <= 3)]['TEU'].sum()
+    teu_q2_2023 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2023) & (teu_by_customer['Month'] <= 6)]['TEU'].sum()
+    total_teu_2022 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2022)]['TEU'].sum()
+    total_teu_2023 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2023)]['TEU'].sum()
+    
+    decrease_files_q2_to_q1 = (files_q1_2023 - files_q2_2023) / files_q1_2023 * 100
+    decrease_teu_q2_to_q1 = (teu_q1_2023 - teu_q2_2023) / teu_q1_2023 * 100
 
-# Sort the list by the highest decrease in volume first
-decrease_customers = sorted(decrease_customers, key=lambda x: x[1], reverse=True)
+    
+    if files_2022 > 0 and (files_q2_2023 / files_2022) <= 0.8:
+        percent_decrease_files = ((files_2022 - files_q2_2023) / files_2022) * 100
+    else:
+        percent_decrease_files = None
 
+    if teu_2022 > 0 and (teu_q2_2023 / teu_2022) <= 0.8:
+        percent_decrease_teu = ((teu_2022 - teu_q2_2023) / teu_2022) * 100
+    else:
+        percent_decrease_teu = None
+    
+    if percent_decrease_files is not None or percent_decrease_teu is not None:
+        decrease_customers.append((customer, total_files_2022, total_files_2023, percent_decrease_files, total_teu_2022, total_teu_2023, percent_decrease_teu, files_q1_2023, files_q2_2023, decrease_files_q2_to_q1, teu_q1_2023, teu_q2_2023, decrease_teu_q2_to_q1))
+
+decrease_customers = sorted(decrease_customers, reverse=True, key=lambda x: x[1] if x[1] is not None else -1)
+
+# Define a route to render the index.html template
 @app.route('/')
 def index2():
-    return render_template('index2.html', decrease_customers=decrease_customers, customer_data=customer_data)
+    return render_template('index2.html', decrease_customers=decrease_customers)
 
 if __name__ == '__main__':
     app.run(debug=True)
