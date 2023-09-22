@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -32,15 +32,20 @@
             color: red;
         }
         .less-than-100 {
-    background-color: yellow;
-}
+            background-color: yellow;
+        }
     </style>
+    <!-- Add these lines to the <head> section of your HTML template -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
 </head>
 <body>
-    <h1>Customer P&L Report</h1>
+    <h1>**Customer P&L Report**</h1>
 
     <h2>Customer Data</h2>
-    <table>
+    <table id="customerTable" class="display">
         <thead>
             <tr>
                 <th>Customer Name</th>
@@ -60,7 +65,26 @@
             {% endfor %}
         </tbody>
     </table>
+    
+    <script>
+        $(document).ready(function() {
+            console.log("Document ready.");
+            var table = $('#customerTable').DataTable({
+                "paging": false,
+                "searching": true,
+                "info": true,
+                "order": []
+        });
+        console.log("DataTable initialized.");
+        var data = table.rows().data().toArray();
 
+});
+        
+    </script>
+    
     <!-- ... Rest of your HTML code ... -->
+</body>
+</html>
+
 </body>
 </html>
