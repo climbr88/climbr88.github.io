@@ -70,4 +70,5 @@ def index2():
     return render_template('index2.html', decrease_customers=decrease_customers)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=port)
