@@ -56,16 +56,26 @@
                 <td>{{ customer }}</td>
                 <td>{{ total_files_2022 }}</td>
                 <td>{{ total_files_2023 }}</td>
-                <td>{{ "%0.2f%%"|format(percent_decrease_files) if percent_decrease_files is not none else "0.00%" }}</td>
+                <td style="{% if percent_decrease_files is not none and percent_decrease_files < 0 %}color: green;{% endif %}">
+                    {{ "%0.2f%%"|format(percent_decrease_files) if percent_decrease_files is not none else "0.00%" }}
+                    {% if percent_decrease_files is not none and percent_decrease_files < 0 %}<span>&#8593;</span>{% endif %}
                 <td>{{ total_teu_2022 }}</td>
                 <td>{{ total_teu_2023 }}</td>
-                <td>{{ "%0.2f%%"|format(percent_decrease_teu) if percent_decrease_teu is not none else "0.00%" }}</td>
+                <td style="{% if percent_decrease_teu is not none and percent_decrease_teu < 0 %}color: green;{% endif %}">
+                    {{ "%0.2f%%"|format(percent_decrease_teu) if percent_decrease_teu is not none else "0.00%" }}
+                    {% if percent_decrease_teu is not none and percent_decrease_teu < 0 %}<span>&#8593;</span>{% endif %}
+                </td>
                 <td>{{ files_q1_2023 }}</td>
                 <td>{{ files_q2_2023 }}</td>
-                <td>{{ "%0.2f%%"|format(decrease_files_q2_to_q1) if decrease_files_q2_to_q1 is not none else "0.00%" }}</td>
+                <td style="{% if decrease_files_q2_to_q1 is not none and decrease_files_q2_to_q1 < 0 %}color: green;{% endif %}">
+                    {{ "%0.2f%%"|format(decrease_files_q2_to_q1) if decrease_files_q2_to_q1 is not none else "0.00%" }}
+                    {% if decrease_files_q2_to_q1 is not none and decrease_files_q2_to_q1 < 0 %}<span>&#8593;</span>{% endif %}
                 <td>{{ teu_q1_2023 }}</td>
                 <td>{{ teu_q2_2023 }}</td>
-                <td>{{ "%0.2f%%"|format(decrease_teu_q2_to_q1) if decrease_teu_q2_to_q1 is not none else "0.00%" }}</td>                   
+                <td style="{% if decrease_teu_q2_to_q1 is not none and decrease_teu_q2_to_q1 < 0 %}color: green;{% endif %}">
+                    {{ "%0.2f%%"|format(decrease_teu_q2_to_q1) if decrease_teu_q2_to_q1 is not none else "0.00%" }}
+                    {% if decrease_teu_q2_to_q1 is not none and decrease_teu_q2_to_q1 < 0 %}<span>&#8593;</span>{% endif %}
+                                 
             </tr>    
                             
                                 
