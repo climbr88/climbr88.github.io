@@ -46,6 +46,8 @@ for customer in files_by_customer['CUSTOMER'].unique():
     teu_2022 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2022)]['TEU'].sum()
     teu_q1_2023 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2023) & (teu_by_customer['Month'] <= 3)]['TEU'].sum()
     teu_q2_2023 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2023) & (teu_by_customer['Month'] <= 6)]['TEU'].sum()
+    teu_q1_2022 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2022) & (teu_by_customer['Month'] <= 3)]['TEU'].sum()
+    teu_q2_2022 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2022) & (teu_by_customer['Month'] <= 6)]['TEU'].sum()
     total_teu_2022 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2022)]['TEU'].sum()
     total_teu_2023 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2023)]['TEU'].sum()
     files_q1_2022 = files_by_customer[(files_by_customer['CUSTOMER'] == customer) & (files_by_customer['Year'] == 2022) & (files_by_customer['Month'] <= 3)]['Files'].sum()
