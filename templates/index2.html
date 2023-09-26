@@ -55,7 +55,7 @@
         </thead>
         <tbody>
             
-            {% for customer, total_files_2022, total_files_2023, percent_decrease_files, total_teu_2022, total_teu_2023, percent_decrease_teu, files_q1_2023, files_q2_2023, decrease_files_q2_to_q1, teu_q1_2023, teu_q2_2023, decrease_teu_q2_to_q1 in decrease_customers %}
+            {% for customer, total_files_2022, total_files_2023, percent_decrease_files, total_teu_2022, total_teu_2023, percent_decrease_teu, files_q1_2023, files_q2_2023, decrease_files_q2_to_q1, teu_q1_2023, teu_q2_2023, decrease_teu_q2_to_q1, decrease_files_q1_year, decrease_teu_q1_year, decrease_files_q2_year, decrease_teu_q2_year   in decrease_customers %}
             <tr>
                 <td>{{ customer }}</td>
                 <td>{{ total_files_2022 }}</td>
@@ -75,17 +75,23 @@
                     {{ "%0.2f%%"|format(decrease_files_q2_to_q1) if decrease_files_q2_to_q1 is not none else "0.00%" }}
                     {% if decrease_files_q2_to_q1 is not none and decrease_files_q2_to_q1 < 0 %}<span>&#8593;</span>{% endif %}
                 <td style="{% if decrease_files_q1_year is not none and decrease_files_q1_year < 0 %}color: green;{% endif %}">
-                    {{ "%0.2f%%"|format(decrease_files_q2_to_q1) if decrease_files_q2_to_q1 is not none else "0.00%" }}
-                    {% if decrease_files_q2_to_q1 is not none and decrease_files_q2_to_q1 < 0 %}<span>&#8593;</span>{% endif %}
-                <td style="{% if decrease_files_q2_to_q1 is not none and decrease_files_q2_to_q1 < 0 %}color: green;{% endif %}">
-                    {{ "%0.2f%%"|format(decrease_files_q2_to_q1) if decrease_files_q2_to_q1 is not none else "0.00%" }}
-                    {% if decrease_files_q2_to_q1 is not none and decrease_files_q2_to_q1 < 0 %}<span>&#8593;</span>{% endif %}        
+                    {{ "%0.2f%%"|format(decrease_files_q1_year ) if decrease_files_q1_year  is not none else "0.00%" }}
+                    {% if decrease_files_q1_year  is not none and decrease_files_q1_year  < 0 %}<span>&#8593;</span>{% endif %}
+                <td style="{% if decrease_files_q2_year  is not none and decrease_files_q2_year  < 0 %}color: green;{% endif %}">
+                    {{ "%0.2f%%"|format(decrease_files_q2_year ) if decrease_files_q2_year  is not none else "0.00%" }}
+                    {% if decrease_files_q2_year  is not none and decrease_files_q2_year  < 0 %}<span>&#8593;</span>{% endif %}        
                 <td>{{ teu_q1_2023 }}</td>
                 <td>{{ teu_q2_2023 }}</td>
                 <td style="{% if decrease_teu_q2_to_q1 is not none and decrease_teu_q2_to_q1 < 0 %}color: green;{% endif %}">
                     {{ "%0.2f%%"|format(decrease_teu_q2_to_q1) if decrease_teu_q2_to_q1 is not none else "0.00%" }}
                     {% if decrease_teu_q2_to_q1 is not none and decrease_teu_q2_to_q1 < 0 %}<span>&#8593;</span>{% endif %}
-                                 
+                <td style="{% if decrease_teu_q1_year is not none and decrease_teu_q1_year < 0 %}color: green;{% endif %}">
+                    {{ "%0.2f%%"|format(decrease_teu_q1_year) if decrease_teu_q1_year is not none else "0.00%" }}
+                    {% if decrease_teu_q1_year is not none and decrease_teu_q1_year < 0 %}<span>&#8593;</span>{% endif %}
+                <td style="{% if decrease_teu_q2_year is not none and decrease_teu_q2_year < 0 %}color: green;{% endif %}">
+                    {{ "%0.2f%%"|format(decrease_teu_q2_year) if decrease_teu_q2_year is not none else "0.00%" }}
+                    {% if decrease_teu_q2_year is not none and decrease_teu_q2_year < 0 %}<span>&#8593;</span>{% endif %}
+                             
             </tr>    
                             
                                 
