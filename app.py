@@ -50,7 +50,7 @@ for customer in files_by_customer['CUSTOMER'].unique():
 
     
     if files_2022 > 0 and (files_q2_2023 / files_2022) <= 0.8:
-        percent_decrease_files = ((files_2022 - files_q2_2023) / files_2022) * 100
+        percent_decrease_files = ((files_2022 - total_files_2023) / files_2022) * 100
     else:
         percent_decrease_files = None
 
