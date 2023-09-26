@@ -43,10 +43,14 @@
                 <th>Percent Decrease (TEU)</th>
                 <th>Total Files (Q1 2023)</th>
                 <th>Total Files (Q2 2023)</th>
-                <th>Decrease in Files (Q2 to Q1)</th>
+                <th>Decrease in Files (Q2 to Q1 2023)</th>
+                <th>Decrease in Files (Q1 2023 v 2022)</th>
+                <th>Decrease in Files (Q2 2023 v 2022)</th>
                 <th>Total TEU (Q1 2023)</th>
                 <th>Total TEU (Q2 2023)</th>
-                <th>Decrease in TEU (Q2 to Q1)</th>
+                <th>Decrease in TEU (Q2 to Q1 2023)</th>
+                <th>Decrease in TEU (Q1 2023 v 2022)</th>
+                <th>Decrease in TEU (Q2 2023 v 2022)</th>
             </tr>
         </thead>
         <tbody>
@@ -70,6 +74,12 @@
                 <td style="{% if decrease_files_q2_to_q1 is not none and decrease_files_q2_to_q1 < 0 %}color: green;{% endif %}">
                     {{ "%0.2f%%"|format(decrease_files_q2_to_q1) if decrease_files_q2_to_q1 is not none else "0.00%" }}
                     {% if decrease_files_q2_to_q1 is not none and decrease_files_q2_to_q1 < 0 %}<span>&#8593;</span>{% endif %}
+                <td style="{% if decrease_files_q1_year is not none and decrease_files_q1_year < 0 %}color: green;{% endif %}">
+                    {{ "%0.2f%%"|format(decrease_files_q2_to_q1) if decrease_files_q2_to_q1 is not none else "0.00%" }}
+                    {% if decrease_files_q2_to_q1 is not none and decrease_files_q2_to_q1 < 0 %}<span>&#8593;</span>{% endif %}
+                <td style="{% if decrease_files_q2_to_q1 is not none and decrease_files_q2_to_q1 < 0 %}color: green;{% endif %}">
+                    {{ "%0.2f%%"|format(decrease_files_q2_to_q1) if decrease_files_q2_to_q1 is not none else "0.00%" }}
+                    {% if decrease_files_q2_to_q1 is not none and decrease_files_q2_to_q1 < 0 %}<span>&#8593;</span>{% endif %}        
                 <td>{{ teu_q1_2023 }}</td>
                 <td>{{ teu_q2_2023 }}</td>
                 <td style="{% if decrease_teu_q2_to_q1 is not none and decrease_teu_q2_to_q1 < 0 %}color: green;{% endif %}">
