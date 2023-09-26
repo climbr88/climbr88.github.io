@@ -20,6 +20,8 @@ df['Year'] = df['ETA'].dt.year
 # Group by customer, month, and year and aggregate the counts
 files_by_customer = df.groupby(['CUSTOMER', 'Month', 'Year'])['FILE'].count().reset_index(name='Files')
 teu_by_customer = df.groupby(['CUSTOMER', 'Month', 'Year'])['TEU'].sum().reset_index(name='TEU')
+# Get the maximum available month for 2023 data
+max_month_2023 = files_by_customer[(files_by_customer['Year'] == 2023)]['Month'].max()
 
 # Filter out customers with less than 10 total files
 files_by_customer = files_by_customer.groupby('CUSTOMER').filter(lambda x: x['Files'].sum() >= 10)
@@ -38,6 +40,8 @@ for customer in files_by_customer['CUSTOMER'].unique():
     files_q1_2023 = files_by_customer[(files_by_customer['CUSTOMER'] == customer) & (files_by_customer['Year'] == 2023) & (files_by_customer['Month'] <= 3)]['Files'].sum()
     files_q2_2023 = files_by_customer[(files_by_customer['CUSTOMER'] == customer) & (files_by_customer['Year'] == 2023) & (files_by_customer['Month'] <= 6)]['Files'].sum()
     total_files_2022 = files_by_customer[(files_by_customer['CUSTOMER'] == customer) & (files_by_customer['Year'] == 2022)]['Files'].sum()
+
+    total_files_2022 = files_by_customer[(files_by_customer['CUSTOMER'] == customer) & (files_by_customer['Year'] == 2022) & (files_by_customer['Month'] <= max_month_2023)].sum()
     total_files_2023 = files_by_customer[(files_by_customer['CUSTOMER'] == customer) & (files_by_customer['Year'] == 2023)]['Files'].sum()
     teu_2022 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2022)]['TEU'].sum()
     teu_q1_2023 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2023) & (teu_by_customer['Month'] <= 3)]['TEU'].sum()
