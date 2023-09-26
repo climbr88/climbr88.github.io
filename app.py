@@ -44,9 +44,14 @@ for customer in files_by_customer['CUSTOMER'].unique():
     teu_q2_2023 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2023) & (teu_by_customer['Month'] <= 6)]['TEU'].sum()
     total_teu_2022 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2022)]['TEU'].sum()
     total_teu_2023 = teu_by_customer[(teu_by_customer['CUSTOMER'] == customer) & (teu_by_customer['Year'] == 2023)]['TEU'].sum()
-    
+    files_q1_2022 = files_by_customer[(files_by_customer['CUSTOMER'] == customer) & (files_by_customer['Year'] == 2022) & (files_by_customer['Month'] <= 3)]['Files'].sum()
+    files_q2_2022 = files_by_customer[(files_by_customer['CUSTOMER'] == customer) & (files_by_customer['Year'] == 2022) & (files_by_customer['Month'] <= 6)]['Files'].sum()
     decrease_files_q2_to_q1 = (files_q1_2023 - files_q2_2023) / files_q1_2023 * 100
     decrease_teu_q2_to_q1 = (teu_q1_2023 - teu_q2_2023) / teu_q1_2023 * 100
+    decrease_files_q1_year = (files_q1_2022 - files_q1_2023) / files_q1_2022 * 100
+    decrease_teu_q1_year = (teu_q1_2022 - teu_q1_2023) / teu_q1_2022 * 100
+    decrease_files_q2_year = (files_q2_2022 - files_q2_2023) / files_q2_2022 * 100
+    decrease_teu_q2_year = (teu_q2_2022 - teu_q2_2023) / teu_q2_2022 * 100
 
     
     if files_2022 > 0 and (files_q2_2023 / files_2022) <= 0.8:
@@ -60,7 +65,7 @@ for customer in files_by_customer['CUSTOMER'].unique():
         percent_decrease_teu = None
     
     if percent_decrease_files is not None or percent_decrease_teu is not None:
-        decrease_customers.append((customer, total_files_2022, total_files_2023, percent_decrease_files, total_teu_2022, total_teu_2023, percent_decrease_teu, files_q1_2023, files_q2_2023, decrease_files_q2_to_q1, teu_q1_2023, teu_q2_2023, decrease_teu_q2_to_q1))
+        decrease_customers.append((customer, total_files_2022, total_files_2023, percent_decrease_files, total_teu_2022, total_teu_2023, percent_decrease_teu, files_q1_2023, files_q2_2023, decrease_files_q2_to_q1, decrease_files_q1_year, decrease_files_q2_year, teu_q1_2023, teu_q2_2023, decrease_teu_q2_to_q1, decrease_teu_q1_year, decrease_teu_q2_year ))
 
 decrease_customers = sorted(decrease_customers, reverse=True, key=lambda x: x[1] if x[1] is not None else -1)
 
